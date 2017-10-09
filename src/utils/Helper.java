@@ -258,7 +258,6 @@ public class Helper {
 			}
 			wr.close();
 			reader.close();
-			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+ result);
 			if(result == "0") {
 				check_requet = false;
 			}

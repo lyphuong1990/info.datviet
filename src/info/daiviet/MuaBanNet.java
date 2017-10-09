@@ -58,16 +58,16 @@ public class MuaBanNet implements Runnable {
 				// check timepost
 				int check_tmepost = Helper.checkDatePostWithDateToday(timestamp_post);
 
-//				if (check_tmepost != 0) {
-//					next_page = false;
-//					page = 1;
-//					break;
-//				} else {
-//					next_page = true;
-//				}
-//				if (MySQLConnUtils.checkTitleExit(md5header)) {
-//					continue;
-//				}
+				if (check_tmepost != 0) {
+					next_page = false;
+					page = 1;
+					break;
+				} else {
+					next_page = true;
+				}
+				if (MySQLConnUtils.checkTitleExit(md5header)) {
+					continue;
+				}
 
 				// link detal
 				Element header_link_el = item.select("a.mbn-image").first();
@@ -118,8 +118,8 @@ public class MuaBanNet implements Runnable {
 				String str_detail = contens_detail.html();
 				System.out.println(str_detail);
 
-				MySQLConnUtils.insertTableNews(str_full_name, str_price, str_phone, strhead, str_detail, "Hà nội",
-						addresspost, timestamp_post, header_link, 6, timestamp_nows, md5header);
+//				MySQLConnUtils.insertTableNews(str_full_name, str_price, str_phone, strhead, str_detail, "Hà nội",
+//						addresspost, timestamp_post, header_link, 6, timestamp_nows, md5header);
 			}
 			if (next_page) {
 				page = page + 1;
