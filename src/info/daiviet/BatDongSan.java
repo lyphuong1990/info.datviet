@@ -27,12 +27,12 @@ public class BatDongSan implements Runnable{
 	}
 	 public static int page = 1;
 	 
-	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException, ParseException {
+	public static void main(String[] args) {
 		processPostBDS("https://batdongsan.com.vn/nha-dat-ban-ha-noi/p1");
 	}
 
 
-	public static void processPostBDS(String url) throws ClassNotFoundException, SQLException, ParseException {
+	public static void processPostBDS(String url){
 		Connection conn = Jsoup.connect(url);
 		try {
 			boolean next_page = false;
@@ -133,8 +133,9 @@ public class BatDongSan implements Runnable{
 				page = 1;
 			}
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			Helper.writeLog4j(e.toString());
 			e.printStackTrace();
 		}
 		

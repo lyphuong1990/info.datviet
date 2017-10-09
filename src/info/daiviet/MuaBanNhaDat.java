@@ -92,6 +92,7 @@ public class MuaBanNhaDat implements Runnable{
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			Helper.writeLog4j(e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -109,6 +110,7 @@ public class MuaBanNhaDat implements Runnable{
 			 Document response = Jsoup.connect(url).header("Referer", url).header("Content-Type", "text/*").post();
 			 phone =  response.body().text().replaceAll("\"", "");
 		} catch (Exception e) { 
+			Helper.writeLog4j(e.toString());
 			System.err.println("Loi: " + e.getMessage());
 		}
 		return phone;

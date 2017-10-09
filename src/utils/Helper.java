@@ -1,6 +1,13 @@
 package utils;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -14,8 +21,15 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Appender;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 
 public class Helper {
+	public static String path_log = "usr/local/checkmysql/";
 
 	public static String getMD5(String input) {
 		String hashtext;
@@ -92,11 +106,10 @@ public class Helper {
 	}
 
 	/*
-	*return -1 if datetime_post > datetime_today
-	*return 0 if datetime_post = datetime_today
-	*return 1 if datetime_post < datetime_today
+	 * return -1 if datetime_post > datetime_today return 0 if datetime_post =
+	 * datetime_today return 1 if datetime_post < datetime_today
 	 * 
-	 * */
+	 */
 	public static int checkDatePostWithDateToday(int input) throws ParseException {
 		System.out.println(input);
 		String timestamp_str = new SimpleDateFormat("dd/MM/yyyy").format(new Date(input * 1000L));
@@ -106,7 +119,7 @@ public class Helper {
 		Date datetime_today = sdf.parse(sdf.format(new Date()));
 		return datetime_post.compareTo(datetime_today);
 	}
-	
+
 	public static int getTimestamPost(String input) {
 		int post_date = 0;
 
@@ -122,12 +135,12 @@ public class Helper {
 
 		if (check_year > -1) {
 			String datetime_post[] = new String[2];
-			if(str_date.indexOf(":") == -1) {
-				str_date = str_date+" "+datemap.get("hour_now")+":"+datemap.get("minute_now")+":00";
-			}else {
-				str_date = str_date+":00";
+			if (str_date.indexOf(":") == -1) {
+				str_date = str_date + " " + datemap.get("hour_now") + ":" + datemap.get("minute_now") + ":00";
+			} else {
+				str_date = str_date + ":00";
 			}
-			
+
 			datetime_post[0] = "dd/MM/yyyy HH:mm:ss";
 			datetime_post[1] = str_date;
 			post_date = getTimestamp(false, datetime_post, 0);
@@ -152,26 +165,108 @@ public class Helper {
 		return post_date;
 
 	}
-	
+
 	public static String escapeHTML(String s) {
-        StringBuilder out = new StringBuilder(Math.max(16, s.length()));
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c > 127 || c == '"' || c == '<' || c == '>' || c == '&' || c == '\'') {
-                out.append("&#");
-                out.append((int) c);
-                out.append(';');
-                out.append("");
-            } else {
-                out.append(c);
-            }
-        }
-        return out.toString();
-    }
-	
+		StringBuilder out = new StringBuilder(Math.max(16, s.length()));
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (c > 127 || c == '"' || c == '<' || c == '>' || c == '&' || c == '\'') {
+				out.append("&#");
+				out.append((int) c);
+				out.append(';');
+				out.append("");
+			} else {
+				out.append(c);
+			}
+		}
+		return out.toString();
+	}
+
 	public static String convertWord(String str) {
 		str = str.replace("✅", "").replace("💸", "").replace("📱", "").replace("\'", "").replace("\"", "");
 		return str;
 	}
 
+	public static void writeLog4j(String inputLog) {
+		// creates pattern layout
+		PatternLayout layout = new PatternLayout();
+		String conversionPattern = "%-7p %d [%t] %c %x - %m%n";
+		layout.setConversionPattern(conversionPattern);
+
+		// creates console appender
+		ConsoleAppender consoleAppender = new ConsoleAppender();
+		consoleAppender.setLayout(layout);
+		consoleAppender.activateOptions();
+
+		// creates file appender
+		FileAppender fileAppender = new FileAppender();
+		fileAppender.setFile(path_log + "applog.txt");
+		fileAppender.setLayout(layout);
+		fileAppender.activateOptions();
+
+		// configures the root logger
+		Logger rootLogger = Logger.getRootLogger();
+		rootLogger.setLevel(Level.DEBUG);
+		rootLogger.addAppender(consoleAppender);
+		rootLogger.addAppender(fileAppender);
+
+		// creates a custom logger and log messages
+		Logger logger = Logger.getLogger(Helper.class);
+		logger.info(inputLog);
+	}
+
+	public static boolean sendDataToServer(StringBuffer strParam,boolean ckInsert) {
+		System.out.println(strParam);
+		boolean check_requet =true;
+		String urlParameters = "";
+		String request = "";
+		
+		if(ckInsert) {
+			//insert databse
+			urlParameters = "query=" + strParam;
+			request = "http://www.admin.sangiaodichnhadat.info/api/insertquery?";
+		}else {
+			//check title
+			urlParameters = "md5title=" + strParam;
+			request ="http://www.admin.sangiaodichnhadat.info/api/checkdata?";
+		}
+		System.out.println(urlParameters);
+		byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
+		int postDataLength = postData.length;
+		URL url;
+		try {
+			url = new URL(request);
+
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setDoOutput(true);
+			conn.setInstanceFollowRedirects(false);
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			conn.setRequestProperty("charset", "utf-8");
+			conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+			conn.setUseCaches(false);
+			DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+			wr.write(postData);
+			wr.flush();
+
+			String result = "";
+			String line;
+			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+			while ((line = reader.readLine()) != null) {
+				result += line;
+			}
+			wr.close();
+			reader.close();
+			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+ result);
+			if(result == "0") {
+				check_requet = false;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return check_requet;
+	}
 }

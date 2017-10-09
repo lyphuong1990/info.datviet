@@ -96,6 +96,7 @@ public class RongBay implements Runnable{
 				processPost(urlNext);
 			}
 		} catch (Exception e) {
+			Helper.writeLog4j(e.toString());
 			e.printStackTrace();
 			// TODO: handle exception
 		}

@@ -24,11 +24,17 @@ public class DiaOcOnline implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException, ParseException {
-		processPost("http://diaoconline.vn/sieu-thi/loc/?tindang=1&tp=2");
+	public static void main(String[] args) {
+		try {
+			processPost("http://diaoconline.vn/sieu-thi/loc/?tindang=1&tp=2");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Helper.writeLog4j(e.toString());
+			e.printStackTrace();
+		}
 	}
 
-	public static void processPost(String url) throws ClassNotFoundException, SQLException, ParseException {
+	public static void processPost(String url) {
 		Connection conn = Jsoup.connect(url);
 		try {
 			boolean next_page = false;
@@ -115,8 +121,9 @@ public class DiaOcOnline implements Runnable{
 				page = 1;
 			}
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			Helper.writeLog4j(e.toString());
 			e.printStackTrace();
 		}
 	}

@@ -1,0 +1,3 @@
+INFO    2017-10-04 22:44:02,185 [main] utils.Helper  - java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)
+INFO    2017-10-04 22:44:02,190 [main] utils.Helper  - java.lang.NullPointerException
+INFO    2017-10-04 22:44:02,190 [main] utils.Helper  - java.lang.NullPointerException

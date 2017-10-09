@@ -1,5 +1,7 @@
 package info.daiviet;
 
+import utils.Helper;
+
 public class Process implements Runnable{
 	
 	
@@ -10,11 +12,7 @@ public class Process implements Runnable{
 			DiaOcOnline dool = new DiaOcOnline();
 			MuaBanNhaDat mbnd = new MuaBanNhaDat();
 			RongBay rb = new RongBay();
-			Thread t = new Thread(bds);
-			Thread t1 = new Thread(ct);
-			Thread t2 = new Thread(dool);
-			Thread t3 = new Thread(mbnd);
-			Thread t4 = new Thread(rb);
+			Thread t = new Thread();
 			while (true) {
 				bds.run();
 				ct.run();
@@ -24,6 +22,7 @@ public class Process implements Runnable{
 				t.sleep(30000);
 			}
 		} catch (Exception e) {
+			Helper.writeLog4j(e.toString());
 			e.printStackTrace();
 		}
 	}
