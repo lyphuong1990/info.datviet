@@ -3,20 +3,15 @@ package info.daiviet;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.google.gson.Gson;
 
 import utils.Helper;
 import utils.MySQLConnUtils;
 
 public class ChoTot implements Runnable{
-	public static int page_number = 100;
+	public static int page_number = 1;
 	public static int ofset = 0;
 	public void run() {
 		try {
@@ -36,7 +31,7 @@ public class ChoTot implements Runnable{
 	public static void processPostChoTot(String url_json)  {
 		String json;
 		try {
-			json = readUrl(url_json);
+			json = Helper.readUrl(url_json);
 			JSONObject obj = new JSONObject(json);
 			boolean next_page = false;
 			
@@ -100,30 +95,11 @@ public class ChoTot implements Runnable{
 		
 	}
 
-	private static String readUrl(String urlString) throws Exception {
-		BufferedReader reader = null;
-		try {
-			URL url = new URL(urlString);
-			reader = new BufferedReader(new InputStreamReader(url.openStream()));
-			StringBuffer buffer = new StringBuffer();
-			int read;
-			char[] chars = new char[1024];
-			while ((read = reader.read(chars)) != -1) {
-				buffer.append(chars, 0, read);
-			}
-			return buffer.toString();
-		} finally {
-			if (reader != null)
-				reader.close();
-		}
-
-	}
-
 	public static JSONObject getDeatil(int id_list){
 		String json;
 		JSONObject obj = null;
 		try {
-			json = readUrl("https://gateway.chotot.com/v1/public/ad-listing/" + id_list);
+			json = Helper.readUrl("https://gateway.chotot.com/v1/public/ad-listing/" + id_list);
 			obj = new JSONObject(json);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
