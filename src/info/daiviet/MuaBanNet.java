@@ -84,7 +84,10 @@ public class MuaBanNet implements Runnable {
 				// contacts info
 				Elements contacts_info_element = contens_result_detail.select(".ct-contact");
 				Element full_name_el = contacts_info_element.select(".clearfix .contact-name").first();
-				String str_full_name = full_name_el.text().trim();
+				String str_full_name = "";
+				if(full_name_el != null) {
+					str_full_name = full_name_el.text().trim();
+				}
 
 				// Phone
 				Element phone_el = contacts_info_element.select(".clearfix .contact-mobile").first();
