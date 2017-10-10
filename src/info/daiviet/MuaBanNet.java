@@ -85,7 +85,6 @@ public class MuaBanNet implements Runnable {
 				Elements contacts_info_element = contens_result_detail.select(".ct-contact");
 				Element full_name_el = contacts_info_element.select(".clearfix .contact-name").first();
 				String str_full_name = full_name_el.text().trim();
-				System.out.println(str_full_name);
 
 				// Phone
 				Element phone_el = contacts_info_element.select(".clearfix .contact-mobile").first();
@@ -116,10 +115,9 @@ public class MuaBanNet implements Runnable {
 				// detail
 				Elements contens_detail = contens_result_detail.select(".ct-body.overflow");
 				String str_detail = contens_detail.html();
-				System.out.println(str_detail);
 
-//				MySQLConnUtils.insertTableNews(str_full_name, str_price, str_phone, strhead, str_detail, "Hà nội",
-//						addresspost, timestamp_post, header_link, 6, timestamp_nows, md5header);
+				MySQLConnUtils.insertTableNews(str_full_name, str_price, str_phone, strhead, str_detail, "Hà nội",
+						addresspost, timestamp_post, header_link, 6, timestamp_nows, md5header);
 			}
 			if (next_page) {
 				page = page + 1;

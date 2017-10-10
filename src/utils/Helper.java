@@ -258,10 +258,11 @@ public class Helper {
 			}
 			wr.close();
 			reader.close();
-			if(result == "0") {
+			System.out.println(result);
+			if( Integer.valueOf(result) == 0) {
 				check_requet = false;
 			}
-			
+			System.out.println(check_requet);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
