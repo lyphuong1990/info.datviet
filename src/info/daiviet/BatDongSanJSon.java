@@ -15,8 +15,8 @@ public class BatDongSanJSon implements Runnable {
 
 	public void run() {
 		try {
-			String url = "https://www.batdongsan.com.vn/HandlerWeb/APIAccountHandler.ashx?";
-			url += "type=LoadProduct&pType=38&cateId=0&cityCode=HN&distId=1&area=-1&price=-1&wardId=-1&streetId=-1&room=-1&direction=-1&projId=-1&sortBy=1&p=1";
+			String url = "http://apimap.batdongsan.com.vn/api/p_sync?ptype=38&cate=0&city=HN&dist=0&maxarea=0&minarea=0&maxprice=0&minprice=0&ward=0";
+			url += "&street=-1&room=-1&direct=-1&projectid=-1&sort=1&searchType=1&client=android&m=list&pagesize=20&page=1";
 			processPostBDSJS(url);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -24,9 +24,8 @@ public class BatDongSanJSon implements Runnable {
 	}
 	//Chạy nhanh lên nào
 	public static void main(String[] args) {
-
-		String url = "https://www.batdongsan.com.vn/HandlerWeb/APIAccountHandler.ashx?";
-		url += "type=LoadProduct&pType=38&cateId=0&cityCode=HN&distId=1&area=-1&price=-1&wardId=-1&streetId=-1&room=-1&direction=-1&projId=-1&sortBy=1&p=1";
+		String url = "http://apimap.batdongsan.com.vn/api/p_sync?ptype=38&cate=0&city=HN&dist=0&maxarea=0&minarea=0&maxprice=0&minprice=0&ward=0";
+		url += "&street=-1&room=-1&direct=-1&projectid=-1&sort=1&searchType=1&client=android&m=list&pagesize=20&page=1";
 		processPostBDSJS(url);
 	}
 
@@ -34,13 +33,13 @@ public class BatDongSanJSon implements Runnable {
 		String json;
 		try {
 			json = Helper.readUrl(url_json);
+			json = Helper.decodeBase64(json);
 			JSONObject obj = new JSONObject(json);
 			boolean next_page = false;
 
-			JSONArray arr = obj.getJSONArray("lst");
+			JSONArray arr = obj.getJSONArray("data");
 			for (int i = 0; i < arr.length(); i++) {
-				int product_id = arr.getJSONObject(i).getInt("ProductId");
-				System.out.println(product_id);
+				int product_id = arr.getJSONObject(i).getInt("id");
 
 				JSONArray arrdeatil = getDeatil(product_id);
 				for (int j = 0; j < arrdeatil.length(); j++) {
@@ -77,10 +76,10 @@ public class BatDongSanJSon implements Runnable {
 			if (next_page) {
 				page_number = page_number + 1;
 				ofset = ofset + 10;
-				System.out.println("page_number" + page_number);
+				System.out.println("batdongsan+page_number" + page_number);
 
-				String url = "https://www.batdongsan.com.vn/HandlerWeb/APIAccountHandler.ashx?";
-				url += "type=LoadProduct&pType=38&cateId=0&cityCode=HN&distId=1&area=-1&price=-1&wardId=-1&streetId=-1&room=-1&direction=-1&projId=-1&sortBy=1&p=";
+				String url = "http://apimap.batdongsan.com.vn/api/p_sync?ptype=38&cate=0&city=HN&dist=0&maxarea=0&minarea=0&maxprice=0&minprice=0&ward=0";
+				url += "&street=-1&room=-1&direct=-1&projectid=-1&sort=1&searchType=1&client=android&m=list&pagesize=20&page=";
 
 				processPostBDSJS(url + page_number);
 			} else {

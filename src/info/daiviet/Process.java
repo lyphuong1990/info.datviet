@@ -8,6 +8,7 @@ public class Process implements Runnable{
 	public static void main(String[] args) {
 		try {
 			BatDongSan bds = new BatDongSan();
+			BatDongSanJSon bdsjs = new BatDongSanJSon();
 			ChoTot ct = new ChoTot();
 			DiaOcOnline dool = new DiaOcOnline();
 			MuaBanNhaDat mbnd = new MuaBanNhaDat();
@@ -15,6 +16,7 @@ public class Process implements Runnable{
 			Thread t = new Thread();
 			while (true) {
 				bds.run();
+				bdsjs.run();
 				ct.run();
 				dool.run();
 				mbnd.run();
