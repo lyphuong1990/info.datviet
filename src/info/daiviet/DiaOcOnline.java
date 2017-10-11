@@ -24,6 +24,7 @@ public class DiaOcOnline implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	//Chạy nhanh lên nào
 	public static void main(String[] args) {
 		try {
 			processPost("http://diaoconline.vn/sieu-thi/loc/?tindang=1&tp=2");

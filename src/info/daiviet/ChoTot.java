@@ -21,6 +21,7 @@ public class ChoTot implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	//Chạy nhanh lên nào
 	public static void main(String[] args) {
 
 		

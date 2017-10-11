@@ -17,7 +17,7 @@ import utils.MySQLConnUtils;
 
 
 public class BatDongSan implements Runnable{
-
+	//Chạy nhanh lên nào
 	public void run() {
 		try {
 		processPostBDS("https://batdongsan.com.vn/nha-dat-ban-ha-noi/p1");

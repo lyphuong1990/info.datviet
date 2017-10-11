@@ -4,7 +4,7 @@ import utils.Helper;
 
 public class Process implements Runnable{
 	
-	
+	//Chạy nhanh lên nào
 	public static void main(String[] args) {
 		try {
 			BatDongSan bds = new BatDongSan();
