@@ -15,6 +15,7 @@ public class ChoTot implements Runnable{
 	public static int ofset = 0;
 	public void run() {
 		try {
+			System.out.println(".chotot.com");
 			processPostChoTot(
 					"https://gateway.chotot.com/v1/public/ad-listing?region=12&cg=1000&w=1&limit=20&o=0&st=s,k&page=1");
 		}catch (Exception e) {
@@ -82,7 +83,7 @@ public class ChoTot implements Runnable{
 			if (next_page) {
 				page_number = page_number + 1;
 				ofset = ofset + 10;
-				System.out.println("page_number"+page_number);
+				System.out.println("chotot page_number"+page_number);
 				processPostChoTot("https://gateway.chotot.com/v1/public/ad-listing?region=12&cg=1000&w=1&limit=20&o="+ofset+"&st=s,k&page=" + page_number);
 			} else {
 				ofset = 0;

@@ -15,6 +15,7 @@ public class BatDongSanJSon implements Runnable {
 
 	public void run() {
 		try {
+			System.out.println("batdongsan.com.vn");
 			String url = "http://apimap.batdongsan.com.vn/api/p_sync?ptype=38&cate=0&city=HN&dist=0&maxarea=0&minarea=0&maxprice=0&minprice=0&ward=0";
 			url += "&street=-1&room=-1&direct=-1&projectid=-1&sort=1&searchType=1&client=android&m=list&pagesize=20&page=1";
 			processPostBDSJS(url);

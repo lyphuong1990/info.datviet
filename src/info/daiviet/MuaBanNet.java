@@ -15,6 +15,7 @@ public class MuaBanNet implements Runnable {
 
 	public void run() {
 		try {
+			System.out.println("muaban.net");
 			processPostMuaBan("https://muaban.net/mua-ban-nha-dat-cho-thue-ha-noi-l24-c3?sort=1");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,6 +125,7 @@ public class MuaBanNet implements Runnable {
 			}
 			if (next_page) {
 				page = page + 1;
+				System.out.println("muaban.net page" + page);
 				processPostMuaBan("https://muaban.net/mua-ban-nha-dat-cho-thue-ha-noi-l24-c3?sort=1&cp=" + page);
 			} else {
 				page = 1;

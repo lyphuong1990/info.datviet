@@ -19,6 +19,7 @@ public class DiaOcOnline implements Runnable{
 	public static int page = 1;
 	public void run() {
 		try {
+			System.out.println("diaoconline.vn");
 			processPost("http://diaoconline.vn/sieu-thi/loc/?tindang=1&tp=2");
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -64,7 +65,6 @@ public class DiaOcOnline implements Runnable{
 				int check_tmepost = Helper.checkDatePostWithDateToday(timestamp_post);
 //				System.out.println(str_date);
 				// System.out.println(check_tmepost);
-				System.out.println(str_date);
 				if (check_tmepost != 0) {
 					next_page = false;
 					page = 1;
@@ -117,6 +117,7 @@ public class DiaOcOnline implements Runnable{
 			}
 			if (next_page) {
 				page = page + 1;
+				System.out.println("diaoconline.vn page" + page);
 				processPost("http://diaoconline.vn/sieu-thi/loc/?tindang=1&tp=2&pi=" + page);
 			} else {
 				page = 1;

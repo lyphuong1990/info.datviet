@@ -128,6 +128,7 @@ public class BatDongSan implements Runnable{
 			}
 			if(next_page) {
 				page = page+1;
+				System.out.println("batdongsan.com.vn page" +page);
 				processPostBDS("https://batdongsan.com.vn/nha-dat-ban-ha-noi/p="+page);
 			}else {
 				page = 1;

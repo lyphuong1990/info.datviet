@@ -18,6 +18,7 @@ public class RongBay implements Runnable{
 	static int pageCount = 1;
 	public void run() {
 		try {
+			System.out.println("rongbay.com");
 			processPost(url);
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -92,6 +93,7 @@ public class RongBay implements Runnable{
 
 			if (isCheckNextPage) {
 				pageCount++;
+				System.out.println("rongbay.com +page" + pageCount);
 				String urlNext = urlPage + pageCount + page;
 				processPost(urlNext);
 			}

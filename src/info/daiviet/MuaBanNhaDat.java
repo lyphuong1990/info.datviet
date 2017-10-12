@@ -17,6 +17,7 @@ public class MuaBanNhaDat implements Runnable{
 	static int pageCount = 1;
 	public void run() {
 		try {
+			System.out.println("muabannhadat.vn");
 			processPost(urlLInk);
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -87,6 +88,7 @@ public class MuaBanNhaDat implements Runnable{
 
 			if (isNextPage) {
 				pageCount ++;
+				System.out.println("muabannhadat.vn page" + pageCount);
 				String url = urlNext + pageCount;
 				processPost(url);
 			}
