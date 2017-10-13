@@ -18,8 +18,11 @@ public class RongBay implements Runnable{
 	static int pageCount = 1;
 	public void run() {
 		try {
-			System.out.println("rongbay.com");
-			processPost(url);
+			while (true) {
+				System.out.println("rongbay.com");
+				processPost(url);
+				Thread.sleep(30000);
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

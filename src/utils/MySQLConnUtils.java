@@ -74,7 +74,7 @@ public class MySQLConnUtils {
 	}
 
 	public static int insertTableNews(String fullname, String price, String phone, String title, String description,
-			String city, String address, int time_post, String url, int page_id, int created_at, String md5_title) {
+			String city, String address, int time_post, String url, int page_id, int created_at, String md5_title) throws InterruptedException {
 		String sql = "";
 		try {
 			//Connection connection = getMySQLConnection();
@@ -99,6 +99,9 @@ public class MySQLConnUtils {
 			Helper.sendDataToServer(new StringBuffer(sql),true);
 		} catch (Exception e) {
 			// TODO: handle exception
+			Thread.sleep(2000);
+			insertTableNews(fullname, price, phone, title, description, city, address, time_post, url, page_id, created_at, md5_title);
+			System.out.println("gọi lại");
 			Helper.writeLog4j(e.toString());
 			e.printStackTrace();
 		}

@@ -15,8 +15,11 @@ public class MuaBanNet implements Runnable {
 
 	public void run() {
 		try {
-			System.out.println("muaban.net");
-			processPostMuaBan("https://muaban.net/mua-ban-nha-dat-cho-thue-ha-noi-l24-c3?sort=1");
+			while (true) {
+				System.out.println("muaban.net");
+				processPostMuaBan("https://muaban.net/mua-ban-nha-dat-cho-thue-ha-noi-l24-c3?sort=1");
+				Thread.sleep(30000);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

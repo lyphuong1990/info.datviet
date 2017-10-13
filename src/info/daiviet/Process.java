@@ -26,19 +26,12 @@ public class Process implements Runnable{
 			Thread t_bdsjs = new Thread(bdsjs);
 			
 			 t_bds.start();
-			 t_bds.sleep(30000);
 			 t_ct.start();
-			 t_ct.sleep(30000);
 			 t_dool.start();
-			 t_dool.sleep(30000);
 			 t_mbnd.start();
-			 t_mbnd.sleep(30000);
 			 t_rb.start();
-			 t_rb.sleep(30000);
 			 t_mbnet.start();
-			 t_mbnet.sleep(30000);
 			 t_bdsjs.start();
-			 t_bdsjs.sleep(30000);
 			
 			
 			

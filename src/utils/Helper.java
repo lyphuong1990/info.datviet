@@ -28,7 +28,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
 public class Helper {
-	public static String path_log = "usr/local/checkmysql/";
+	public static String path_log = "E:/";
 
 	public static String getMD5(String input) {
 		String hashtext;
@@ -258,6 +258,13 @@ public class Helper {
 			}
 			System.out.println(check_requet);
 		} catch (Exception e) {
+			try {
+				Thread.sleep(2000);
+				sendDataToServer(strParam, ckInsert);
+				System.err.println("Gọi lai API");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+			}
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

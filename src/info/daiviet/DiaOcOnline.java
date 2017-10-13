@@ -19,8 +19,12 @@ public class DiaOcOnline implements Runnable{
 	public static int page = 1;
 	public void run() {
 		try {
-			System.out.println("diaoconline.vn");
-			processPost("http://diaoconline.vn/sieu-thi/loc/?tindang=1&tp=2");
+			while (true) {
+				System.out.println("diaoconline.vn");
+				processPost("http://diaoconline.vn/sieu-thi/loc/?tindang=1&tp=2");
+				Thread.sleep(30000);
+			}
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

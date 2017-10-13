@@ -17,8 +17,11 @@ public class MuaBanNhaDat implements Runnable{
 	static int pageCount = 1;
 	public void run() {
 		try {
-			System.out.println("muabannhadat.vn");
-			processPost(urlLInk);
+			while (true) {
+				System.out.println("muabannhadat.vn");
+				processPost(urlLInk);
+				Thread.sleep(30000);
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

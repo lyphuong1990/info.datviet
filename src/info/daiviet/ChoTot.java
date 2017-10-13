@@ -15,9 +15,13 @@ public class ChoTot implements Runnable{
 	public static int ofset = 0;
 	public void run() {
 		try {
-			System.out.println(".chotot.com");
-			processPostChoTot(
-					"https://gateway.chotot.com/v1/public/ad-listing?region=12&cg=1000&w=1&limit=20&o=0&st=s,k&page=1");
+			while (true) {
+				System.out.println(".chotot.com");
+				processPostChoTot(
+						"https://gateway.chotot.com/v1/public/ad-listing?region=12&cg=1000&w=1&limit=20&o=0&st=s,k&page=1");
+				Thread.sleep(30000);
+			}
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
