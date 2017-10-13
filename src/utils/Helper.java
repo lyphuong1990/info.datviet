@@ -277,7 +277,7 @@ public class Helper {
 		BufferedReader reader = null;
 		try {
 			URL url = new URL(urlString);
-			reader = new BufferedReader(new InputStreamReader(url.openStream(),StandardCharsets.UTF_8),8192);
+			reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8), 8192);
 			StringBuffer buffer = new StringBuffer();
 			int read;
 			char[] chars = new char[1024];

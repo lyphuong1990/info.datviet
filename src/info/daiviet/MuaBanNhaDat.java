@@ -11,10 +11,11 @@ import org.jsoup.select.Elements;
 import utils.Helper;
 import utils.MySQLConnUtils;
 
-public class MuaBanNhaDat implements Runnable{
+public class MuaBanNhaDat implements Runnable {
 	static String urlLInk = "http://www.muabannhadat.vn/nha-dat-3490/tp-ha-noi-s28?sf=dpo&so=d";
 	static String urlNext = "http://www.muabannhadat.vn/nha-dat-3490/tp-ha-noi-s28?sf=dpo&so=d&p=";
 	static int pageCount = 1;
+
 	public void run() {
 		try {
 			while (true) {
@@ -22,16 +23,15 @@ public class MuaBanNhaDat implements Runnable{
 				processPost(urlLInk);
 				Thread.sleep(30000);
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
 
 	public static void processPost(String urlLInk) {
 		boolean isNextPage = false;
 		try {
-//			System.err.println(urlLInk);
+			// System.err.println(urlLInk);
 			Document doc = Jsoup.connect(urlLInk).get();
 			Element result_block = doc.select("div.list-group.result-list").first();
 			Elements data = result_block.select(".resultItem");
@@ -48,13 +48,13 @@ public class MuaBanNhaDat implements Runnable{
 				String str_time = time_element.text().trim();
 				int timestamp_post = Helper.getTimestamPost(str_time);
 				String str_date = str_time.substring(str_time.indexOf(":") + 1, str_time.length());
-				int timestamp_nows = Helper.getTimestamp(true,null,0);
+				int timestamp_nows = Helper.getTimestamp(true, null, 0);
 				str_date = str_date.trim();
 				// check timepost
 				if (!str_date.equals(Helper.getTimesNow())) {
 					isNextPage = false;
 					return;
-				}else {
+				} else {
 					isNextPage = true;
 				}
 				if (MySQLConnUtils.checkTitleExit(md5header)) {
@@ -75,22 +75,22 @@ public class MuaBanNhaDat implements Runnable{
 
 				Elements contens_detail = docDetail.select("#Description");
 				String str_description = contens_detail.text().trim();
-				
+
 				Elements fullName_detail = docDetail.select(".col-xs-12.name-contact");
 				String fullName = fullName_detail.text().trim();
-				
+
 				String phone = getPhone(getId(header_link));
-				if (phone == null ) {
+				if (phone == null) {
 					return;
 				}
-//				System.err.println(phone);
-				MySQLConnUtils.insertTableNews(fullName, str_price, phone, title, str_description, "Ha noi",
-						str_add, timestamp_post, header_link, 3, timestamp_nows, md5header);
+				// System.err.println(phone);
+				MySQLConnUtils.insertTableNews(fullName, str_price, phone, title, str_description, "Ha noi", str_add,
+						timestamp_post, header_link, 3, timestamp_nows, md5header);
 				// conect database
 			}
 
 			if (isNextPage) {
-				pageCount ++;
+				pageCount++;
 				System.out.println("muabannhadat.vn page" + pageCount);
 				String url = urlNext + pageCount;
 				processPost(url);
@@ -101,25 +101,22 @@ public class MuaBanNhaDat implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
 	public static String getId(String link) {
 		return link.substring(link.lastIndexOf("-") + 1);
 	}
 
 	public static String getPhone(String id) {
 		String phone = null;
-		 try {
-			 String url = "http://www.muabannhadat.vn/Services/Tracking/a" + id + "/GetPhoneCustom";
-			 Document response = Jsoup.connect(url).header("Referer", url).header("Content-Type", "text/*").post();
-			 phone =  response.body().text().replaceAll("\"", "");
-		} catch (Exception e) { 
+		try {
+			String url = "http://www.muabannhadat.vn/Services/Tracking/a" + id + "/GetPhoneCustom";
+			Document response = Jsoup.connect(url).header("Referer", url).header("Content-Type", "text/*").post();
+			phone = response.body().text().replaceAll("\"", "");
+		} catch (Exception e) {
 			Helper.writeLog4j(e.toString());
 			System.err.println("Loi: " + e.getMessage());
 		}
 		return phone;
 	}
-
 
 }

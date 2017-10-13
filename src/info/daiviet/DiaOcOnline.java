@@ -1,8 +1,5 @@
 package info.daiviet;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Iterator;
 
 import org.jsoup.Connection;
@@ -14,9 +11,10 @@ import org.jsoup.select.Elements;
 import utils.Helper;
 import utils.MySQLConnUtils;
 
-public class DiaOcOnline implements Runnable{
+public class DiaOcOnline implements Runnable {
 
 	public static int page = 1;
+
 	public void run() {
 		try {
 			while (true) {
@@ -24,12 +22,13 @@ public class DiaOcOnline implements Runnable{
 				processPost("http://diaoconline.vn/sieu-thi/loc/?tindang=1&tp=2");
 				Thread.sleep(30000);
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	//Chạy nhanh lên nào
+
+	// Chạy nhanh lên nào
 	public static void main(String[] args) {
 		try {
 			processPost("http://diaoconline.vn/sieu-thi/loc/?tindang=1&tp=2");
@@ -61,13 +60,13 @@ public class DiaOcOnline implements Runnable{
 				// date conten
 				Elements post_conten_date = item.select(".content .right .content .post_type");
 				String str_date = post_conten_date.text().trim();
-//				System.out.println(str_date);
+				// System.out.println(str_date);
 				int timestamp_post = Helper.getTimestamPost(str_date);
 				// deatime nows
 				int timestamp_nows = Helper.getTimestamp(true, null, 0);
 				// check timepost
 				int check_tmepost = Helper.checkDatePostWithDateToday(timestamp_post);
-//				System.out.println(str_date);
+				// System.out.println(str_date);
 				// System.out.println(check_tmepost);
 				if (check_tmepost != 0) {
 					next_page = false;

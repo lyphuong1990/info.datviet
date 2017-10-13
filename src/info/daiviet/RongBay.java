@@ -1,7 +1,5 @@
 package info.daiviet;
 
-import java.util.Map;
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,11 +9,12 @@ import org.jsoup.select.Elements;
 import utils.Helper;
 import utils.MySQLConnUtils;
 
-public class RongBay implements Runnable{
+public class RongBay implements Runnable {
 	static String url = "http://rongbay.com/Ha-Noi/Nha-rieng-Mua-Ban-nha-dat-c15-t4.html";
 	static String urlPage = "http://rongbay.com/Ha-Noi/Nha-rieng-Mua-Ban-nha-dat-c15-t4-trang";
 	static String page = ".html?ft=1";
 	static int pageCount = 1;
+
 	public void run() {
 		try {
 			while (true) {
@@ -23,17 +22,18 @@ public class RongBay implements Runnable{
 				processPost(url);
 				Thread.sleep(30000);
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	public static void main(String[] args) {
-		
+
 	}
 
 	public static void processPost(String url) {
 		try {
-//			System.err.println(url);
+			// System.err.println(url);
 			boolean isCheckNextPage = false;
 			Document doc = Jsoup.connect(url).get();
 			Element result_block = doc.select("div.content_bds .list_content_bds").first();
@@ -86,7 +86,7 @@ public class RongBay implements Runnable{
 
 						if (phone_element != null) {
 							String phone = phone_element.text();
-//							System.err.println(phone);
+							// System.err.println(phone);
 							MySQLConnUtils.insertTableNews(fullName, price, phone, title, description, "Ha noi",
 									adderees, timestamp_post, link, 5, Helper.getTimestamp(true, null, 0), md5header);
 						}
