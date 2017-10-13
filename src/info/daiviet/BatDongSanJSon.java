@@ -11,8 +11,8 @@ import utils.MySQLConnUtils;
 
 public class BatDongSanJSon implements Runnable {
 	public static int page_number = 1;
-	public static int ofset = 0;
-
+	
+@Override
 	public void run() {
 		try {
 			System.out.println("batdongsan.com.vn");
@@ -53,9 +53,7 @@ public class BatDongSanJSon implements Runnable {
 					int check_tmepost = Helper.checkDatePostWithDateToday(timestamp_post);
 					if (check_tmepost != 0) {
 						next_page = false;
-						page_number = 1;
-						ofset = 0;
-						break;
+						continue;
 					} else {
 						next_page = true;
 					}
@@ -76,15 +74,14 @@ public class BatDongSanJSon implements Runnable {
 			}
 			if (next_page) {
 				page_number = page_number + 1;
-				ofset = ofset + 10;
 				System.out.println("batdongsan+page_number" + page_number);
-
+				if(page_number > 100) {
+					return;
+				}
 				String url = "http://apimap.batdongsan.com.vn/api/p_sync?ptype=38&cate=0&city=HN&dist=0&maxarea=0&minarea=0&maxprice=0&minprice=0&ward=0";
 				url += "&street=-1&room=-1&direct=-1&projectid=-1&sort=1&searchType=1&client=android&m=list&pagesize=20&page=";
-
 				processPostBDSJS(url + page_number);
 			} else {
-				ofset = 0;
 				page_number = 1;
 			}
 		} catch (Exception e) {

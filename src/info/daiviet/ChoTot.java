@@ -82,7 +82,7 @@ public class ChoTot implements Runnable{
 			}
 			if (next_page) {
 				page_number = page_number + 1;
-				ofset = ofset + 10;
+				ofset = ofset + 20;
 				System.out.println("chotot page_number"+page_number);
 				processPostChoTot("https://gateway.chotot.com/v1/public/ad-listing?region=12&cg=1000&w=1&limit=20&o="+ofset+"&st=s,k&page=" + page_number);
 			} else {
