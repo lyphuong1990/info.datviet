@@ -129,6 +129,9 @@ public class MuaBanNet implements Runnable {
 			if (next_page) {
 				page = page + 1;
 				System.out.println("muaban.net page" + page);
+				if(page > 200) {
+					return;
+				}
 				processPostMuaBan("https://muaban.net/mua-ban-nha-dat-cho-thue-ha-noi-l24-c3?sort=1&cp=" + page);
 			} else {
 				page = 1;
